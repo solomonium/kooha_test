@@ -8,6 +8,7 @@ class IconRes {
   String get notification => 'notification';
   String get image => 'image';
   String get image1 => 'image1';
+  String get star => 'star';
 
   ///png image part
   String get appLogoGrey => 'grey_app_logo';

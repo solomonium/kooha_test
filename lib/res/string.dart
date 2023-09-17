@@ -22,11 +22,19 @@ class Strings {
   String get browse => 'Browse';
   String get search => 'Search';
   String get featured => 'Featured';
+  String get review => 'Reviews';
+  String get introVideo => 'Intro video';
   String get seeAll => 'See all';
   String get trending => 'Trending';
   String get newNoteWorthy => 'New & Noteworthy';
   String get actors => 'Actors';
   String get musicians => 'Musicians';
+  String get follow => 'Follow';
+  String get chat => 'Chat';
+  String get commentReview =>
+      'Love their drink specials. Bartenders super nice. Spent a week at UCSF and this was a very nice break for the parental unit.';
+  String get celebInfo =>
+      'Award winning nigerian actress. Africa magic best actress in Comedy/TV nominee. Brand influencer and model.';
 
   String get password => "Password";
   String get passwordMin => "Password (min. of 8 characters)";

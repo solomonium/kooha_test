@@ -33,7 +33,7 @@ class _SeeAllFeaturedState extends State<SeeAllFeatured> {
                       middleOrEndWidget: const PrimaryText(text: 'Featured')),
                   20.verticalSpace,
                   CustomTextField(
-                    textInputType: TextInputType.emailAddress,
+                    textInputType: TextInputType.text,
                     textController: searchController,
                     hintText: R.S.search,
                     autoFocus: true,
@@ -85,8 +85,9 @@ class _SeeAllFeaturedState extends State<SeeAllFeatured> {
                               ),
                             ),
                           ).clickable(() {
-                            BrowseCmd(context).getCelebById(
-                                featured.featuredModel[index].uuid.toString());
+                            context.push(CelebDetails(
+                              id: featured.featuredModel[index].uuid.toString(),
+                            ));
                           }),
                           5.verticalSpace,
                           PrimaryText(

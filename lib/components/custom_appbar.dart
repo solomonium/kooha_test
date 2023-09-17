@@ -45,7 +45,8 @@ class CustomAppBar extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: onBackButtonPressed,
-            color: Colors.black, // Customize the arrow color
+            color:
+                theme.glassWhite.withOpacity(0.7), // Customize the arrow color
             iconSize: 24.0, // Adjust the size as needed
           ),
         ),

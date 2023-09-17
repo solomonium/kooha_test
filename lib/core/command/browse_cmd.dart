@@ -61,7 +61,7 @@ class BrowseCmd extends BaseCommand {
     res = await service.getCelebById(id, token: auth.token);
     if (res != null) {
       if (res.statusCode! >= 200 && res.statusCode! < 300) {
-        var resData = res.data['data'] as Map<String, dynamic>;
+        var resData = res.data as Map<String, dynamic>;
         details.celebDetails = CelebByIdModel.fromJson(resData);
         safePrint(resData);
       } else if (res.statusCode! >= 400 && res.statusCode! < 500) {
