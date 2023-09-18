@@ -115,6 +115,7 @@ class _BrowseState extends State<Browse> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       Column(

@@ -31,6 +31,10 @@ class CelebByIdModel {
         "message": message,
         "data": data?.toJson(),
       };
+
+  static CelebByIdModel empty() {
+    return CelebByIdModel();
+  }
 }
 
 class CelebData {

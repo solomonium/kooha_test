@@ -357,34 +357,36 @@ class _CelebDetailsState extends State<CelebDetails> {
       }),
       bottomNavigationBar:
           Consumer<BrowseProvider>(builder: (context, details, _) {
-        return BottomAppBar(
-          child: SizedBox(
-            height: 100,
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  PrimaryButton(
-                      width: 114.w,
-                      height: 62.h,
-                      color: theme.grey.withOpacity(0.5),
-                      buttonText: R.S.chat,
-                      buttonTextColor: theme.secondary,
-                      onPressed: () {}),
-                  10.horizontalSpace,
-                  PrimaryButton(
-                    width: 215.w,
-                    height: 62.h,
-                    buttonText:
-                        'Book Now ${MoneySymbols.ngn} ${details.celebDetails.data!.fee!.bookingFee}',
-                    onPressed: () {},
+        return details.celebDetails.data == null
+            ? const Center(child: CircularProgressIndicator())
+            : BottomAppBar(
+                child: SizedBox(
+                  height: 100,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        PrimaryButton(
+                            width: 114.w,
+                            height: 62.h,
+                            color: theme.grey.withOpacity(0.5),
+                            buttonText: R.S.chat,
+                            buttonTextColor: theme.secondary,
+                            onPressed: () {}),
+                        10.horizontalSpace,
+                        PrimaryButton(
+                          width: 215.w,
+                          height: 62.h,
+                          buttonText:
+                              'Book Now ${MoneySymbols.ngn} ${details.celebDetails.data!.fee!.bookingFee}',
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        );
+                ),
+              );
       }),
     );
   }

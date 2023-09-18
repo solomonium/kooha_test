@@ -18,8 +18,8 @@ class BrowseProvider extends BaseProvider {
     notifyListeners();
   }
 
-  CelebByIdModel? _celeb;
-  CelebByIdModel get celebDetails => _celeb!;
+  CelebByIdModel _celeb = CelebByIdModel.empty();
+  CelebByIdModel get celebDetails => _celeb;
   set celebDetails(CelebByIdModel celeb) {
     _celeb = celeb;
     notifyListeners();
