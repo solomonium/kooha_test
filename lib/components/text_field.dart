@@ -19,7 +19,7 @@ class CustomTextField extends StatefulWidget {
   const CustomTextField({
     Key? key,
     this.icon,
-    this.obscure,
+    this.obscure = false,
     this.isPassword = false,
     required this.textInputType,
     this.labelText,
@@ -61,7 +61,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               textInputAction: widget.textInputAction,
               keyboardType: widget.textInputType,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              obscureText: widget.isPassword,
+              obscureText: widget.obscure!,
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: TextStyle(color: theme.grey),

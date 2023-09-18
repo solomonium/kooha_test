@@ -67,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> with FormMixin {
                         SecondaryText(text: R.S.beReady),
                         47.verticalSpace,
                         CustomTextField(
+                          isPassword: true,
                           textInputType: TextInputType.emailAddress,
                           labelText: R.S.email,
                           textController: emailController,
@@ -114,13 +115,13 @@ class _LoginScreenState extends State<LoginScreen> with FormMixin {
                                         right: 17,
                                         bottom: 10),
                                     child: PrimaryText(
-                                      text: obscurePassword ? 'Show' : 'Hide',
+                                      text: !obscurePassword ? 'Show' : 'Hide',
                                       color: theme.secondary,
                                       fontSize: 14,
                                     ),
                                   ),
                                 ),
-                          obscure: false,
+                          obscure: !obscurePassword,
                           autoFocus: false,
                           validate: Validator.password(minLength: 8),
                           textInputAction: TextInputAction.done,
