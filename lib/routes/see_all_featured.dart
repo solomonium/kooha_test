@@ -60,7 +60,7 @@ class _SeeAllFeaturedState extends State<SeeAllFeatured> {
                             crossAxisCount: 2, // Number of items per row
                             crossAxisSpacing: 8.0,
                             mainAxisSpacing: 8.0,
-                            childAspectRatio: 0.7),
+                            childAspectRatio: 0.6),
                     itemCount:
                         featured.featuredModel.length, // Total number of items
                     shrinkWrap: true, // Adjust as needed
@@ -85,9 +85,12 @@ class _SeeAllFeaturedState extends State<SeeAllFeatured> {
                               ),
                             ),
                           ).clickable(() {
-                            context.push(CelebDetails(
-                              id: featured.featuredModel[index].uuid.toString(),
-                            ));
+                            featured.featuredModel[index].uuid == null
+                                ? context
+                                    .showInAppNotification('fetching Celeb ID')
+                                : context.push(CelebDetails(
+                                    id: featured.featuredModel[index].uuid,
+                                  ));
                           }),
                           5.verticalSpace,
                           PrimaryText(

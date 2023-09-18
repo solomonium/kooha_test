@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:kooha_test/export.dart';
 
 class CelebDetails extends StatefulWidget {
-  CelebDetails({super.key, required this.id});
+  CelebDetails({super.key, this.id});
 
-  String id;
+  String? id;
 
   @override
   State<CelebDetails> createState() => _CelebDetailsState();
@@ -25,7 +25,7 @@ class _CelebDetailsState extends State<CelebDetails> {
 
   Future<void> fetchDataAndComplete() async {
     // Fetch your data and update your model here
-    await BrowseCmd(context).getCelebById(widget.id);
+    await BrowseCmd(context).getCelebById(widget.id ?? '');
 
     // Signal that the data has been loaded by completing the Completer
     _dataLoadedCompleter.complete();
@@ -118,7 +118,8 @@ class _CelebDetailsState extends State<CelebDetails> {
                                     ),
                                     15.verticalSpace,
                                     SecondaryText(
-                                      text: details.celebDetails.data!.bio,
+                                      text: details.celebDetails.data!.bio ??
+                                          'No bio',
                                       color: theme.glassWhite.withOpacity(0.7),
                                     ),
                                     30.verticalSpace,
@@ -130,6 +131,8 @@ class _CelebDetailsState extends State<CelebDetails> {
                                                 child: PrimaryText(
                                                     text: 'No videos yet')),
                                           )
+
+                                        ///TODO fix the video URL based on the response from the CelebID
                                         : Consumer<BrowseProvider>(
                                             builder: (context, featured, _) {
                                             return SizedBox(
@@ -224,9 +227,7 @@ class _CelebDetailsState extends State<CelebDetails> {
                                         PrimaryText(
                                           text: R.S.seeAll,
                                           color: theme.secondary,
-                                        ).clickable(() {
-                                          // context.push(const SeeAllFeatured());
-                                        }),
+                                        ).clickable(() {}),
                                       ],
                                     ),
                                     details.celebDetails.data!.fanReviews!
@@ -248,7 +249,11 @@ class _CelebDetailsState extends State<CelebDetails> {
                                                     const BouncingScrollPhysics(),
                                                 scrollDirection: Axis.vertical,
                                                 shrinkWrap: true,
-                                                itemCount: 2,
+                                                itemCount: details
+                                                    .celebDetails
+                                                    .data!
+                                                    .celebrityReviews!
+                                                    .length,
                                                 itemBuilder:
                                                     ((context, index) =>
                                                         CustomContainer2(
@@ -261,6 +266,9 @@ class _CelebDetailsState extends State<CelebDetails> {
                                                                       .all(
                                                                       16.0),
                                                               child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
                                                                 children: [
                                                                   Row(
                                                                     children: [
@@ -283,8 +291,12 @@ class _CelebDetailsState extends State<CelebDetails> {
                                                                         ),
                                                                         child:
                                                                             PrimaryText(
-                                                                          text:
-                                                                              'C',
+                                                                          text: details
+                                                                              .celebDetails
+                                                                              .data!
+                                                                              .celebrityReviews![index]
+                                                                              .username!
+                                                                              .getInitials(),
                                                                           color:
                                                                               theme.secondary,
                                                                         ).center(),
@@ -294,13 +306,13 @@ class _CelebDetailsState extends State<CelebDetails> {
                                                                         crossAxisAlignment:
                                                                             CrossAxisAlignment.start,
                                                                         children: [
-                                                                          const PrimaryText(
-                                                                              text: 'Christofer'),
+                                                                          PrimaryText(
+                                                                              text: details.celebDetails.data!.celebrityReviews![index].username ?? 'No username'),
                                                                           Row(
                                                                             children: [
                                                                               Image.asset(R.png.star.imgPng),
                                                                               SecondaryText(
-                                                                                text: '4.5/5',
+                                                                                text: details.celebDetails.data!.celebrityReviews![index].rating.toString(),
                                                                                 color: theme.secondary,
                                                                               )
                                                                             ],
@@ -311,8 +323,15 @@ class _CelebDetailsState extends State<CelebDetails> {
                                                                   ),
                                                                   12.verticalSpace,
                                                                   PrimaryText(
-                                                                    text: R.S
-                                                                        .commentReview,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    text: details
+                                                                            .celebDetails
+                                                                            .data!
+                                                                            .celebrityReviews![index]
+                                                                            .content ??
+                                                                        R.S.commentReview,
                                                                     color: theme
                                                                         .primaryText,
                                                                     fontSize:

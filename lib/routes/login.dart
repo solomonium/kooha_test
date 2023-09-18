@@ -92,7 +92,13 @@ class _LoginScreenState extends State<LoginScreen> with FormMixin {
                                         .secondary, // Color for the checkmark icon
                                   ),
                                 )
-                              : null, // Display the checkmark icon when email is valid
+                              : emailController.text.isEmpty
+                                  ? const SizedBox()
+                                  : Icon(
+                                      Icons.close_outlined,
+                                      color: theme
+                                          .redButton, // Color for the checkmark icon
+                                    ), // Display the checkmark icon when email is valid
                         ),
                         20.verticalSpace,
                         CustomTextField(
@@ -155,18 +161,28 @@ class _LoginScreenState extends State<LoginScreen> with FormMixin {
                             }),
                           ),
                           10.verticalSpace,
+
+                          ///Todo disable button when fields are not validated
                           PrimaryButton(
                               isLoading: isLoading,
                               buttonText: 'Log me in',
                               onPressed: () {
-                                validate(() {
-                                  load(() => AuthCmd(context).login({
-                                            "email": emailController.text,
-                                            "password": passwordController.text,
-                                          })
-                                      //  context.push(const MainScreen())
-                                      );
-                                });
+                                validate(
+                                  () {
+                                    load(() => AuthCmd(context).login({
+                                              "email": emailController.text,
+                                              "password":
+                                                  passwordController.text,
+                                            })
+                                        //  context.push(const MainScreen())
+                                        );
+                                  },
+                                  validateFields: true,
+                                  orElse: () => context.showInAppNotification(
+                                      'Email and Password Required',
+                                      type: InAppNotificationType.error),
+                                );
+
                                 // context.push(const MainScreen());
                               }),
                           30.verticalSpace,

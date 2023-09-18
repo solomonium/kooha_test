@@ -1,14 +1,16 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 mixin FormMixin<T extends StatefulWidget> on State<T> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode? autoValidateMode;
 
-  void validate(VoidCallback callback, {VoidCallback? orElse}) {
+  void validate(VoidCallback callback,
+      {VoidCallback? orElse, required bool validateFields}) {
     final FormState? formState = formKey.currentState;
 
-    if (formState != null && formState.validate() != false) {
+    if (formState != null && formState.validate() != false && validateFields) {
       FocusScope.of(context).unfocus();
       formState.save();
       callback();
