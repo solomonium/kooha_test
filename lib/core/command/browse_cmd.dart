@@ -63,6 +63,8 @@ class BrowseCmd extends BaseCommand {
       if (res.statusCode! >= 200 && res.statusCode! < 300) {
         var resData = res.data as Map<String, dynamic>;
         details.celebDetails = CelebByIdModel.fromJson(resData);
+        ctx.showInAppNotification(resData['message'],
+            type: InAppNotificationType.success);
         safePrint(resData);
       } else if (res.statusCode! >= 400 && res.statusCode! < 500) {
         ctx.showInAppNotification(res.data['message']);

@@ -77,7 +77,7 @@ extension SizedContext on BuildContext {
         color = Colors.orange;
         break;
       case InAppNotificationType.error:
-        color = Color(0xffB92E00);
+        color = const Color(0xffB92E00);
         break;
       default:
         throw ("Unknown InAppNotificationType");
@@ -96,11 +96,11 @@ extension SizedContext on BuildContext {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: Text(
-                msg,
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
+              child: PrimaryText(
+                textAlign: TextAlign.center,
+                text: msg,
+                color: Colors.white,
+                fontSize: 14,
               ),
             ),
           ],
