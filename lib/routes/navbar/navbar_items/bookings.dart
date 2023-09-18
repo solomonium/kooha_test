@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kooha_test/export.dart';
 
 class Bookings extends StatefulWidget {
   const Bookings({super.key});
@@ -10,6 +11,11 @@ class Bookings extends StatefulWidget {
 class _BookingsState extends State<Bookings> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [PrimaryText(text: 'Bookings')],
+      ),
+    );
   }
 }

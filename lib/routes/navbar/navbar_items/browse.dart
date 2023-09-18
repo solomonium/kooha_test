@@ -37,14 +37,15 @@ class _BrowseState extends State<Browse> {
     AppTheme theme = context.watch();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        return Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
-                  124.verticalSpace,
+                  100.verticalSpace,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -109,383 +110,405 @@ class _BrowseState extends State<Browse> {
             20.verticalSpace,
             const Line(width: double.infinity),
             32.verticalSpace,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PrimaryText(
-                            text: R.S.featured,
-                            fontSize: 24,
-                            color: theme.secondaryTxt,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PrimaryText(
+                                text: R.S.featured,
+                                fontSize: 24,
+                                color: theme.secondaryTxt,
+                              ),
+                              PrimaryText(
+                                text: R.S.seeAll,
+                                color: theme.secondary,
+                              ).clickable(() {
+                                context.push(const SeeAllFeatured());
+                              }),
+                            ],
                           ),
-                          PrimaryText(
-                            text: R.S.seeAll,
-                            color: theme.secondary,
-                          ).clickable(() {
-                            context.push(const SeeAllFeatured());
+                          13.verticalSpace,
+                          Consumer<BrowseProvider>(
+                              builder: (context, featured, _) {
+                            return SizedBox(
+                              height: 266,
+                              child: ListView.separated(
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(width: 20),
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: featured.featuredModel.length,
+                                itemBuilder: ((context, index) => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomContainer2(
+                                            addShadow: false,
+                                            color: theme.background,
+                                            width: 135,
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: SizedBox(
+                                                  height: 210,
+                                                  child: Image.network(
+                                                      '${R.N.imageUrl}${featured.featuredModel[index].profileImagePath}',
+                                                      errorBuilder:
+                                                          (BuildContext context,
+                                                              Object error,
+                                                              StackTrace?
+                                                                  stackTrace) {
+                                                    return Image.asset(
+                                                        R.png.image.imgPng);
+                                                  }, fit: BoxFit.cover),
+                                                ))),
+                                        5.verticalSpace,
+                                        PrimaryText(
+                                          text: featured
+                                              .featuredModel[index].fullName!,
+                                          fontSize: 14,
+                                        ),
+                                        5.verticalSpace,
+                                        SecondaryText(
+                                          text: featured
+                                              .featuredModel[index].occupation!,
+                                          fontSize: 10,
+                                        ),
+                                        2.verticalSpace,
+                                        Row(
+                                          children: [
+                                            PrimaryText(
+                                              text:
+                                                  '${MoneySymbols.ngn} ${featured.featuredModel[index].fee!.bookingFee}',
+                                              fontSize: 13,
+                                              color: theme.secondary,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                            );
                           }),
                         ],
                       ),
+                      const Line(width: double.infinity),
                       13.verticalSpace,
-                      Consumer<BrowseProvider>(builder: (context, featured, _) {
-                        return SizedBox(
-                          height: 266,
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(width: 20),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: featured.featuredModel.length,
-                            itemBuilder: ((context, index) => Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomContainer2(
-                                        addShadow: false,
-                                        color: theme.background,
-                                        width: 135,
-                                        child: ClipRRect(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PrimaryText(
+                                text: R.S.trending,
+                                fontSize: 24,
+                                color: theme.secondaryTxt,
+                              ),
+                              PrimaryText(
+                                text: R.S.seeAll,
+                                color: theme.secondary,
+                              ).clickable(() {
+                                context.push(const SeeAllTrending());
+                              }),
+                            ],
+                          ),
+                          13.verticalSpace,
+                          Consumer<BrowseProvider>(
+                              builder: (context, trending, _) {
+                            return SizedBox(
+                              height: 266,
+                              child: ListView.separated(
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(width: 20),
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: trending.trendingCelebModel.length,
+                                itemBuilder: ((context, index) => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomContainer2(
+                                            addShadow: false,
+                                            color: theme.background,
+                                            width: 135,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: SizedBox(
+                                                height: 210,
+                                                child: Image.network(
+                                                    '${R.N.imageUrl}${trending.trendingCelebModel[index].profileImagePath}',
+                                                    errorBuilder:
+                                                        (BuildContext context,
+                                                            Object error,
+                                                            StackTrace?
+                                                                stackTrace) {
+                                                  return Image.asset(R.png.image
+                                                      .imgPng); // Display a default/placeholder image on error
+                                                }, fit: BoxFit.cover),
+                                              ),
+                                            )),
+                                        5.verticalSpace,
+                                        PrimaryText(
+                                          text: trending
+                                              .trendingCelebModel[index]
+                                              .fullName!,
+                                          fontSize: 14,
+                                        ),
+                                        5.verticalSpace,
+                                        SecondaryText(
+                                          text: trending
+                                                  .trendingCelebModel[index]
+                                                  .occupation ??
+                                              'Actor',
+                                          fontSize: 10,
+                                        ),
+                                        2.verticalSpace,
+                                        Row(
+                                          children: [
+                                            PrimaryText(
+                                              text:
+                                                  '${MoneySymbols.ngn} ${trending.trendingCelebModel[index].fee!.bookingFee}',
+                                              fontSize: 13,
+                                              color: theme.secondary,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                      const Line(width: double.infinity),
+                      13.verticalSpace,
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PrimaryText(
+                                text: R.S.newNoteWorthy,
+                                fontSize: 24,
+                                color: theme.secondaryTxt,
+                              ),
+                              PrimaryText(
+                                text: R.S.seeAll,
+                                color: theme.secondary,
+                              ),
+                            ],
+                          ),
+                          13.verticalSpace,
+                          SizedBox(
+                            height: 266,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 20),
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: 5,
+                              itemBuilder: ((context, index) => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CustomContainer2(
+                                          addShadow: false,
+                                          color: theme.background,
+                                          width: 135,
+                                          child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            child: SizedBox(
-                                              height: 210,
-                                              child: Image.network(
-                                                  '${R.N.imageUrl}${featured.featuredModel[index].profileImagePath}',
-                                                  errorBuilder: (BuildContext
-                                                          context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                return Image.asset(
-                                                    R.png.image.imgPng);
-                                              }, fit: BoxFit.cover),
-                                            ))),
-                                    5.verticalSpace,
-                                    PrimaryText(
-                                      text: featured
-                                          .featuredModel[index].fullName!,
-                                      fontSize: 14,
-                                    ),
-                                    5.verticalSpace,
-                                    SecondaryText(
-                                      text: featured
-                                          .featuredModel[index].occupation!,
-                                      fontSize: 10,
-                                    ),
-                                    2.verticalSpace,
-                                    Row(
-                                      children: [
-                                        PrimaryText(
-                                          text:
-                                              '${MoneySymbols.ngn} ${featured.featuredModel[index].fee!.bookingFee}',
-                                          fontSize: 13,
-                                          color: theme.secondary,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                  const Line(width: double.infinity),
-                  13.verticalSpace,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          PrimaryText(
-                            text: R.S.trending,
-                            fontSize: 24,
-                            color: theme.secondaryTxt,
-                          ),
-                          PrimaryText(
-                            text: R.S.seeAll,
-                            color: theme.secondary,
-                          ).clickable(() {
-                            context.push(const SeeAllTrending());
-                          }),
-                        ],
-                      ),
-                      13.verticalSpace,
-                      Consumer<BrowseProvider>(builder: (context, trending, _) {
-                        return SizedBox(
-                          height: 266,
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(width: 20),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: trending.trendingCelebModel.length,
-                            itemBuilder: ((context, index) => Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomContainer2(
-                                        addShadow: false,
-                                        color: theme.background,
-                                        width: 135,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          child: SizedBox(
-                                            height: 210,
-                                            child: Image.network(
-                                                '${R.N.imageUrl}${trending.trendingCelebModel[index].profileImagePath}',
-                                                errorBuilder: (BuildContext
-                                                        context,
-                                                    Object error,
-                                                    StackTrace? stackTrace) {
-                                              return Image.asset(R.png.image
-                                                  .imgPng); // Display a default/placeholder image on error
-                                            }, fit: BoxFit.cover),
+                                            child: Image.asset(
+                                                R.png.image.imgPng,
+                                                fit: BoxFit.cover),
+                                          )),
+                                      5.verticalSpace,
+                                      const PrimaryText(
+                                        text: 'Bimbo Ademoye ',
+                                        fontSize: 14,
+                                      ),
+                                      5.verticalSpace,
+                                      const SecondaryText(
+                                        text: 'Actor',
+                                        fontSize: 10,
+                                      ),
+                                      2.verticalSpace,
+                                      Row(
+                                        children: [
+                                          PrimaryText(
+                                            text: 'N24,000',
+                                            fontSize: 13,
+                                            color: theme.secondary,
                                           ),
-                                        )),
-                                    5.verticalSpace,
-                                    PrimaryText(
-                                      text: trending
-                                          .trendingCelebModel[index].fullName!,
-                                      fontSize: 14,
-                                    ),
-                                    5.verticalSpace,
-                                    SecondaryText(
-                                      text: trending.trendingCelebModel[index]
-                                              .occupation ??
-                                          'Actor',
-                                      fontSize: 10,
-                                    ),
-                                    2.verticalSpace,
-                                    Row(
-                                      children: [
-                                        PrimaryText(
-                                          text:
-                                              '${MoneySymbols.ngn} ${trending.trendingCelebModel[index].fee!.bookingFee}',
-                                          fontSize: 13,
-                                          color: theme.secondary,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                  const Line(width: double.infinity),
-                  13.verticalSpace,
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          PrimaryText(
-                            text: R.S.newNoteWorthy,
-                            fontSize: 24,
-                            color: theme.secondaryTxt,
-                          ),
-                          PrimaryText(
-                            text: R.S.seeAll,
-                            color: theme.secondary,
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                            ),
                           ),
                         ],
                       ),
+                      const Line(width: double.infinity),
                       13.verticalSpace,
-                      SizedBox(
-                        height: 266,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 20),
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: ((context, index) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomContainer2(
-                                      addShadow: false,
-                                      color: theme.background,
-                                      width: 135,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(R.png.image.imgPng,
-                                            fit: BoxFit.cover),
-                                      )),
-                                  5.verticalSpace,
-                                  const PrimaryText(
-                                    text: 'Bimbo Ademoye ',
-                                    fontSize: 14,
-                                  ),
-                                  5.verticalSpace,
-                                  const SecondaryText(
-                                    text: 'Actor',
-                                    fontSize: 10,
-                                  ),
-                                  2.verticalSpace,
-                                  Row(
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PrimaryText(
+                                text: R.S.actors,
+                                fontSize: 24,
+                                color: theme.secondaryTxt,
+                              ),
+                              PrimaryText(
+                                text: R.S.seeAll,
+                                color: theme.secondary,
+                              ),
+                            ],
+                          ),
+                          13.verticalSpace,
+                          SizedBox(
+                            height: 266,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 20),
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: 5,
+                              itemBuilder: ((context, index) => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      PrimaryText(
-                                        text: 'N24,000',
-                                        fontSize: 13,
-                                        color: theme.secondary,
+                                      CustomContainer2(
+                                          addShadow: false,
+                                          color: theme.background,
+                                          width: 135,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                R.png.image.imgPng,
+                                                fit: BoxFit.cover),
+                                          )),
+                                      5.verticalSpace,
+                                      const PrimaryText(
+                                        text: 'Bimbo Ademoye ',
+                                        fontSize: 14,
+                                      ),
+                                      5.verticalSpace,
+                                      const SecondaryText(
+                                        text: 'Actor',
+                                        fontSize: 10,
+                                      ),
+                                      2.verticalSpace,
+                                      Row(
+                                        children: [
+                                          PrimaryText(
+                                            text: 'N24,000',
+                                            fontSize: 13,
+                                            color: theme.secondary,
+                                          ),
+                                        ],
                                       ),
                                     ],
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Line(width: double.infinity),
-                  13.verticalSpace,
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          PrimaryText(
-                            text: R.S.actors,
-                            fontSize: 24,
-                            color: theme.secondaryTxt,
-                          ),
-                          PrimaryText(
-                            text: R.S.seeAll,
-                            color: theme.secondary,
+                                  )),
+                            ),
                           ),
                         ],
                       ),
+                      const Line(width: double.infinity),
                       13.verticalSpace,
-                      SizedBox(
-                        height: 266,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 20),
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: ((context, index) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomContainer2(
-                                      addShadow: false,
-                                      color: theme.background,
-                                      width: 135,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(R.png.image.imgPng,
-                                            fit: BoxFit.cover),
-                                      )),
-                                  5.verticalSpace,
-                                  const PrimaryText(
-                                    text: 'Bimbo Ademoye ',
-                                    fontSize: 14,
-                                  ),
-                                  5.verticalSpace,
-                                  const SecondaryText(
-                                    text: 'Actor',
-                                    fontSize: 10,
-                                  ),
-                                  2.verticalSpace,
-                                  Row(
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PrimaryText(
+                                text: R.S.musicians,
+                                fontSize: 24,
+                                color: theme.secondaryTxt,
+                              ),
+                              PrimaryText(
+                                text: R.S.seeAll,
+                                color: theme.secondary,
+                              ),
+                            ],
+                          ),
+                          13.verticalSpace,
+                          SizedBox(
+                            height: 266,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 20),
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: 5,
+                              itemBuilder: ((context, index) => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      PrimaryText(
-                                        text: 'N24,000',
-                                        fontSize: 13,
-                                        color: theme.secondary,
+                                      CustomContainer2(
+                                          addShadow: false,
+                                          color: theme.background,
+                                          width: 135,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                R.png.image.imgPng,
+                                                fit: BoxFit.cover),
+                                          )),
+                                      5.verticalSpace,
+                                      const PrimaryText(
+                                        text: 'Bimbo Ademoye ',
+                                        fontSize: 14,
+                                      ),
+                                      5.verticalSpace,
+                                      const SecondaryText(
+                                        text: 'Actor',
+                                        fontSize: 10,
+                                      ),
+                                      2.verticalSpace,
+                                      Row(
+                                        children: [
+                                          PrimaryText(
+                                            text: 'N24,000',
+                                            fontSize: 13,
+                                            color: theme.secondary,
+                                          ),
+                                        ],
                                       ),
                                     ],
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Line(width: double.infinity),
-                  13.verticalSpace,
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          PrimaryText(
-                            text: R.S.musicians,
-                            fontSize: 24,
-                            color: theme.secondaryTxt,
-                          ),
-                          PrimaryText(
-                            text: R.S.seeAll,
-                            color: theme.secondary,
+                                  )),
+                            ),
                           ),
                         ],
                       ),
-                      13.verticalSpace,
-                      SizedBox(
-                        height: 266,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 20),
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: ((context, index) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomContainer2(
-                                      addShadow: false,
-                                      color: theme.background,
-                                      width: 135,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(R.png.image.imgPng,
-                                            fit: BoxFit.cover),
-                                      )),
-                                  5.verticalSpace,
-                                  const PrimaryText(
-                                    text: 'Bimbo Ademoye ',
-                                    fontSize: 14,
-                                  ),
-                                  5.verticalSpace,
-                                  const SecondaryText(
-                                    text: 'Actor',
-                                    fontSize: 10,
-                                  ),
-                                  2.verticalSpace,
-                                  Row(
-                                    children: [
-                                      PrimaryText(
-                                        text: 'N24,000',
-                                        fontSize: 13,
-                                        color: theme.secondary,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
             32.verticalSpace,
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

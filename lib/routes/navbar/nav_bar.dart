@@ -11,7 +11,7 @@ class BottomNav extends StatelessWidget {
         List<Map<String, dynamic>> items = Mock.navItems();
 
         return SizedBox(
-          height: 100,
+          height: 70,
           width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
