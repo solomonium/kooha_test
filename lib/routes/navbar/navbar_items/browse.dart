@@ -57,6 +57,8 @@ class _BrowseState extends State<Browse> {
                     ],
                   ),
                   20.verticalSpace,
+
+                  ///TODO fix the search implementation
                   CustomTextField(
                     textInputType: TextInputType.text,
                     textController: searchController,
